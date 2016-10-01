@@ -7,7 +7,5 @@
 for (var beer = 99; beer >= 1; beer = beer - 1)
 
 	if (beer >= 2) console.log(beer + " bottles of beer on the wall, " + beer + " bottles of beer. Take one down and pass it around, " + (beer - 1) + " bottles of beer on the wall.");
-	
 	else if (beer == 1) console.log(beer + " bottle of beer on the wall, " + beer + " bottle of beer. Take one down and pass it around, no more bottles of beer on the wall.");
-	
 	else console.log("No more bottles of beer on the wall, no more bottles of beer. Go to the store and buy some more, 99 bottles of beer on the wall.");
