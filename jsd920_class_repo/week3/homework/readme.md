@@ -15,9 +15,23 @@
 
 ### Assignment Due on Tuesday, 10/11:
 
-* Create a sequencer that allows users to add files into its 'storage bank' to play them and customize when they are triggered. The user will be able to create patterns within a predefined 'grid' composed of 16 steps that will signify an 'on' state and 'off' state. These states are controlled by the user tapping on the squares (or steps) as they want to customize the pattern.
+/*
+1. Interface starts with default state -> add audio file.
 
-* The user can drag and drop audio wav files into each 'grid' section within a specified 'target area' to change out the sounds that are being triggered. Changing the pattern and sound files can happen in real-time as the sequencer is running.
+2. Allow the user to drag and drop audio files into predefined areas.
+
+3. When audio file is place into one of the four 'track' sections - the sequencer starts.
+
+4. When the sequencer is started the boxes that compose the 16 steps within a track are displayed and the user can start to create patterns.
+
+5. The patterns can be changed at any time and the audio adapts to the established pattern.
+
+6. At any time the user drag and drop new audio samples into other tracks or change out the current one.
+
+7. As new audio files are added the pattern is maintained.
+
+8. When a new audio file is dragged over a track it displays the default -> add audio file
+*/
 
 #### Optional
 * Reading Chapter 6: [The Secret Life of Objects](http://eloquentjavascript.net/06_object.html) of Eloquent JS
