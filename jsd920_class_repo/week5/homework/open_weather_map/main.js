@@ -34,65 +34,25 @@ Open Weather Map Instructions:
 
 
 
-
-// $(document).ready(function() {
-//     var apiKey = 'a28541e48c380025ec86ee643036ba02';
-//     // var location = 'Portland, Maine';
-//     var myForm = $('#my-form');
-//     var weatherUrl = 'http://api.openweathermap.org/data/2.5/weather?appid=' + apiKey + '&units=imperial&q=' + location;
-//
-//     $('#my-form').submit(function(event) {
-//         event.presventDefault();
-//         var location = $('#my-input').val();
-//
-//       $.get(weatherUrl, function(weatherObj) {
-//           // console.log(weatherObj.main.temp);
-//           $('.location').text(location);
-//           $('.temp').text(weatherObj.main.temp);
-//           $('.humidity').text(weatherObj.main.humidity);
-//           $('.wind').text(weatherObj.wind.speed);
-//     });
-//   });
-// });
-
-
-
-
 $(document).ready(function() {
     var apiKey = 'a28541e48c380025ec86ee643036ba02';
+    var location = $('#my-input').val();
     var weatherUrl = 'http://api.openweathermap.org/data/2.5/weather?appid=' + apiKey + '&units=imperial&q=' + location;
-    // var location = 'Portland, Maine';
-    // var location = $('#my-input');
 
     $('button').click(function(event) {
         event.presventDefault();
-        var location = $('#my-input').val();
-          $(location).submit(function(event) {
 
-          $.get(weatherUrl, function(weatherObj) {
-              console.log(weatherObj.main.temp);
-              $('.location').text(location);
-              $('.temp').text(weatherObj.main.temp);
-              $('.humidity').text(weatherObj.main.humidity);
-              $('.wind').text(weatherObj.wind.speed);
-          });
+        $(location).submit(function(event) {
+
+            $.get(weatherUrl, function(weatherObj) {
+                $('.location').text(location);
+                $('.temp').text(weatherObj.main.temp);
+                $('.humidity').text(weatherObj.main.humidity);
+                $('.wind').text(weatherObj.wind.speed);
+            });
         });
     });
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
