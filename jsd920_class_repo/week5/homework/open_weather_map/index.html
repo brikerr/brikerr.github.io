@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+  	<title></title>
+	<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+	<h1>Open Weather Maps API</h1>
+	<hr>
+
+<div>
+  <form id="my-form">
+      <input type="city" id="my-input" placeholder="Enter city and state" />
+      <button>Get weather info</button>
+
+
+  </form>
+    <h2>Current Weather in <span class = "location"></span></h2>
+
+    <div id="nyc-weather">
+        <p>The temp in <span class="location"></span> is <span class="temp"></span> degrees</p>
+        <p>The humidity in <span class="location"></span> is <span class="humidity"></span> precent</p>
+        <p>The wind speed in <span class="location"></span> is <span class="wind"></span> mph</p>
+
+
+    </div>
+	</div>
+	<hr>
+
+	  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+  	<script src="main.js" type="text/javascript" charset="utf-8" async defer></script>
+
+</body>
+</html>
