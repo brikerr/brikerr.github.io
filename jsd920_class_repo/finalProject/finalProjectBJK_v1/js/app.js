@@ -1,66 +1,4 @@
-<!doctype html>
-<!--
-Beatboxer
-Inspired by https://www.youtube.com/watch?v=6O_92BTrUcA
--->
-<html lang="en">
-<head>
-  <meta charset="utf-8" />
-  <meta http-equiv="x-ua-compatible" content="ie=edge" />
-  <title>Beatboxer</title>
-
-  <style>
-    body {
-      background-color: black;
-    }
-
-    p {
-      margin: 0;
-    }
-
-    button {
-      background-color: black;
-      padding: 10px;
-      border: 10px solid white;
-      margin: 5px;
-      cursor: pointer;
-    }
-
-    button.on {
-      background-color: red;
-      border-color: red;
-    }
-
-    button.ticked {
-      background-color: white;
-      border-color: white;
-    }
-
-    #grid {
-      width: 800px;
-      height: 200px;
-      position: absolute;
-      top:0;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      margin: auto;
-    }
-  </style>
-</head>
-<body>
-  <div id="grid"></div>
-
-  <a href="https://github.com/siggy/beatboxer">
-    <img
-      style="position: absolute; top: 0; right: 0; border: 0;"
-      src="https://camo.githubusercontent.com/52760788cde945287fbb584134c4cbc2bc36f904/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f77686974655f6666666666662e706e67"
-      alt="Fork me on GitHub"
-      data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_white_ffffff.png">
-  </a>
-
-  <script>
-    const BPM = 120;
+const BPM = 120;
     const TICKS = 16;
     const INTERVAL = 1 / (4 * BPM / (60 * 1000));
 
@@ -178,6 +116,3 @@ Inspired by https://www.youtube.com/watch?v=6O_92BTrUcA
       window.removeEventListener('touchend', enableIOSAudio, false);
     }
     window.addEventListener('touchend', enableIOSAudio, false);
-  </script>
-</body>
-</html>

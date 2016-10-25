@@ -36,13 +36,12 @@ Open Weather Map Instructions:
 
 $(document).ready(function() {
     var apiKey = 'a28541e48c380025ec86ee643036ba02';
-    var location = $('#my-input').val();
+    var location = $('#my-input');
     var weatherUrl = 'http://api.openweathermap.org/data/2.5/weather?appid=' + apiKey + '&units=imperial&q=' + location;
 
     $('button').click(function(event) {
-        event.presventDefault();
-
-        $(location).submit(function(event) {
+        event.preventDefault();
+        $(location.val()).submit(function(event) {
 
             $.get(weatherUrl, function(weatherObj) {
                 $('.location').text(location);
@@ -53,6 +52,15 @@ $(document).ready(function() {
         });
     });
 });
+
+
+
+
+
+
+
+
+
 
 
 
