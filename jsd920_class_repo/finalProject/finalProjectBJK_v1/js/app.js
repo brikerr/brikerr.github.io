@@ -1,3 +1,15 @@
+/*
+Todo list:
+1. still need to add drag and drop functionality (helper function)
+2. conditional effects when certain patterns are played and or when the user has used
+interface for x amount of time (helper function)
+3. design out visual affordances for the above
+
+
+*/
+
+
+
 // tempo and time signature
 const BPM = 120;
 const TICKS = 16;
