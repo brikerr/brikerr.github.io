@@ -1,118 +1,105 @@
+// tempo and time signature
 const BPM = 120;
-    const TICKS = 16;
-    const INTERVAL = 1 / (4 * BPM / (60 * 1000));
+const TICKS = 16;
+const INTERVAL = 1 / (4 * BPM / (60 * 1000));
 
-    // sounds originated from http://808.html909.com
-    const sounds = [
-      'sounds/bass_drum.wav',
-      'sounds/snare_drum.wav',
-      'sounds/low_tom.wav',
-      'sounds/mid_tom.wav',
+// sound samples
+const sounds = [
+    'sounds/bass_drum.wav',
+    'sounds/snare_drum.wav',
+    'sounds/low_tom.wav',
+    'sounds/mid_tom.wav',
+];
 
-      // 'sounds/hi_tom.wav',
-      // 'sounds/rim_shot.wav',
-      // 'sounds/hand_clap.wav',
-      // 'sounds/cowbell.wav',
-      // 'sounds/cymbal.wav',
-      // 'sounds/o_hi_hat.wav',
-      // 'sounds/cl_hi_hat.wav',
+const audioCtx = new(window.AudioContext || window.webkitAudioContext)();
+const buffers = [];
+const grid = document.getElementById('grid');
+const sLen = sounds.length;
 
-      // 'sounds/low_conga.wav',
-      // 'sounds/mid_conga.wav',
-      // 'sounds/hi_conga.wav',
-      // 'sounds/claves.wav',
-      // 'sounds/maracas.wav',
-    ];
-
-    const audioCtx = new(window.AudioContext || window.webkitAudioContext)();
-    const buffers = [];
-    const grid = document.getElementById('grid');
-    const sLen = sounds.length;
-
-    for (var soundIndex = 0; soundIndex < sLen; ++soundIndex) {
-      (function (index) {
+for (let soundIndex = 0; soundIndex < sLen; ++soundIndex) {
+    (function(index) {
         // create buffer for sound
         const req = new XMLHttpRequest();
         req.open('GET', sounds[index], true);
         req.responseType = 'arraybuffer';
-        req.onload = function () {
-          audioCtx.decodeAudioData(
-            req.response,
-            function (buffer) {
-              buffers.push(buffer);
-            }
-          );
+        req.onload = function() {
+            audioCtx.decodeAudioData(
+                req.response,
+                function(buffer) {
+                    buffers.push(buffer);
+                }
+            );
         };
         req.send();
-      })(soundIndex);
+    })(soundIndex);
 
-      // create row for sound
-      const fragment = document.createDocumentFragment();
+    // create row for sound
+    const fragment = document.createDocumentFragment();
 
-      for (var t = 0; t < TICKS; ++t) {
+    for (let t = 0; t < TICKS; ++t) {
         const btn = document.createElement('button');
         btn.className = 'beat';
-        btn.addEventListener('click', function () {
-          this.classList.toggle('on');
+        btn.addEventListener('click', function() {
+            this.classList.toggle('on');
         }, false);
 
         fragment.appendChild(btn);
-      }
-
-      grid.appendChild(fragment);
-      grid.appendChild(document.createElement('p'));
     }
 
-    const beats = document.getElementsByClassName('beat');
+    grid.appendChild(fragment);
+    grid.appendChild(document.createElement('p'));
+}
 
-    var lastTick = TICKS - 1;
-    var curTick = 0;
+const beats = document.getElementsByClassName('beat');
 
-    var lastTime = new Date().getTime();
+let lastTick = TICKS - 1;
+let curTick = 0;
 
-    function drumLoop() {
-      const curTime = new Date().getTime();
+let lastTime = new Date().getTime();
 
-      if (curTime - lastTime >= INTERVAL) {
-        for (var i = 0; i < sLen; ++i) {
-          const lastBeat = beats[i * TICKS + lastTick];
-          const curBeat = beats[i * TICKS + curTick];
+function drumLoop() {
+    const curTime = new Date().getTime();
 
-          lastBeat.classList.remove('ticked');
-          curBeat.classList.add('ticked');
+    if (curTime - lastTime >= INTERVAL) {
+        for (let i = 0; i < sLen; ++i) {
+            const lastBeat = beats[i * TICKS + lastTick];
+            const curBeat = beats[i * TICKS + curTick];
 
-          if (curBeat.classList.contains('on')) {
-            try {
-              const source = audioCtx.createBufferSource();
-              source.buffer = buffers[i];
-              source.connect(audioCtx.destination);
-              source.start();
-            } catch (e) {
-              console.error(e.message);
+            lastBeat.classList.remove('ticked');
+            curBeat.classList.add('ticked');
 
-              // Fallback method
-              new Audio(sounds[i]).play();
+            if (curBeat.classList.contains('on')) {
+                try {
+                    const source = audioCtx.createBufferSource();
+                    source.buffer = buffers[i];
+                    source.connect(audioCtx.destination);
+                    source.start();
+                } catch (e) {
+                    console.error(e.message);
+
+                    // Fallback method
+                    new Audio(sounds[i]).play();
+                }
             }
-          }
         }
 
         lastTick = curTick;
         curTick = (curTick + 1) % TICKS;
         lastTime = curTime;
-      }
-      requestAnimationFrame(drumLoop);
     }
     requestAnimationFrame(drumLoop);
+}
+requestAnimationFrame(drumLoop);
 
-    // adapted from https://paulbakaus.com/tutorials/html5/web-audio-on-ios/
-    function enableIOSAudio() {
-      const buffer = audioCtx.createBuffer(1, 1, 22050);
-      const source = audioCtx.createBufferSource();
+// adapted from https://paulbakaus.com/tutorials/html5/web-audio-on-ios/
+function enableIOSAudio() {
+    const buffer = audioCtx.createBuffer(1, 1, 22050);
+    const source = audioCtx.createBufferSource();
 
-      source.buffer = buffer;
-      source.connect(audioCtx.destination);
-      source.noteOn(0);
+    source.buffer = buffer;
+    source.connect(audioCtx.destination);
+    source.noteOn(0);
 
-      window.removeEventListener('touchend', enableIOSAudio, false);
-    }
-    window.addEventListener('touchend', enableIOSAudio, false);
+    window.removeEventListener('touchend', enableIOSAudio, false);
+}
+window.addEventListener('touchend', enableIOSAudio, false);
