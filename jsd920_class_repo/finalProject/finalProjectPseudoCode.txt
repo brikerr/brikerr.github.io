@@ -15,3 +15,8 @@
 
 8. When a new audio file is dragged over a track it displays the default -> add audio file
 */
+
+
+look into 
+
+desktop application
