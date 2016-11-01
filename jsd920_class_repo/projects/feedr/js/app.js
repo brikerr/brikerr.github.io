@@ -9,13 +9,15 @@ $.get("https://accesscontrolalloworiginall.herokuapp.com/http://mashable.com/sto
     articles.forEach(function(article) {
         var singleArticleObj = {
             title: article.title,
-            link: article.link,
+            // link: article.link,
             feature_image_src: article.feature_image,
             channel: article.channel,
             total_shares: article.shares.total
         };
         //add singleArticleObj to articlesCollection
         articlesCollection.push(singleArticleObj);
+
+
     });
     console.log(articlesCollection);
 
@@ -25,8 +27,29 @@ $.get("https://accesscontrolalloworiginall.herokuapp.com/http://mashable.com/sto
     var compileTemp = Handlebars.compile(articleTemplate);
     //3. add objs
     var articlesHtmlBlock = compileTemp({
-      articles: articlesCollection
+        articles: articlesCollection
     });
     //4. append
     var hbList = $('#all_articles').append(articlesHtmlBlock);
+
+
 });
+
+// $('#popUp .popUpAction').show();
+//
+// $('h3').click(function() {
+//     $('#popUp .popUpAction').show(slow);
+// });
+
+
+// var p = $('#popUp');
+//
+// $('h3').click(function() {
+//   p.css('display', 'block');
+// });
+// p.click(function(event) {
+//   e = event || window.event;
+//   if (e.target == this) {
+//     $(p).css('display', 'none');
+//   }
+// });

@@ -52,23 +52,21 @@
 
         <script id="article-template" type="text/x-handlebars-template">
 
-          {{#each articles}}
+            {{#each articles}}
             <article class="article">
                 <section class="featuredImage">
                     <img src="{{feature_image_src}}" alt="" />
                 </section>
                 <section class="articleContent">
-
                     <a href="{{link}}">
                         <h3>{{title}}</h3>
                     </a>
                     <h6>{{channel}}</h6>
                 </section>
                 <section class="impressions">{{total_shares}}</section>
-
                 <div class="clearfix"></div>
             </article>
-          {{/each}}
+            {{/each}}
 
         </script>
         <section id="all_articles"></section>

@@ -103,6 +103,7 @@ function drumLoop() {
 }
 requestAnimationFrame(drumLoop);
 
+
 // adapted from https://paulbakaus.com/tutorials/html5/web-audio-on-ios/
 function enableIOSAudio() {
     const buffer = audioCtx.createBuffer(1, 1, 22050);
@@ -115,3 +116,9 @@ function enableIOSAudio() {
     window.removeEventListener('touchend', enableIOSAudio, false);
 }
 window.addEventListener('touchend', enableIOSAudio, false);
+
+// /create a synth and connect it to the master output (your speakers)
+var synth = new Tone.Synth().toMaster();
+
+//play a middle 'C' for the duration of an 8th note
+synth.triggerAttackRelease("C4", "8n");

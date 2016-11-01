@@ -7,9 +7,9 @@ body {
     }
 
     button {
-      background-color: black;
+      background-color: #414141;
       padding: 10px;
-      border: 10px solid white;
+      border: 10px solid black;
       margin: 5px;
       cursor: pointer;
     }
@@ -20,8 +20,9 @@ body {
     }
 
     button.ticked {
-      background-color: white;
-      border-color: white;
+      background-color: #212121;
+      border-color: black;
+      border-radius: 50%
     }
 
     #grid {
