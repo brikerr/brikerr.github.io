@@ -34,31 +34,61 @@ Open Weather Map Instructions:
 
 
 
-$(document).ready(function() {
-    var apiKey = 'a28541e48c380025ec86ee643036ba02';
-    var location = $('#my-input');
-
-    $('button').click(function(event) {
-        event.preventDefault();
-        var weatherUrl = 'http://api.openweathermap.org/data/2.5/weather?appid=' + apiKey + '&units=imperial&q=' + location.val();
-        $.get(weatherUrl, function(weatherObj) {
-            $('.location').text(location.val());
-            $('.temp').text(weatherObj.main.temp);
-            $('.humidity').text(weatherObj.main.humidity);
-            $('.wind').text(weatherObj.wind.speed);
-        });
-    });
-});
-
-
+// $(document).ready(function() {
+//     var apiKey = 'a28541e48c380025ec86ee643036ba02';
+//     var location = $('#my-input');
+//
+//     $('button').click(function(event) {
+//         event.preventDefault();
+//         var weatherUrl = 'http://api.openweathermap.org/data/2.5/weather?appid=' + apiKey + '&units=imperial&q=' + location.val();
+//         $.get(weatherUrl, function(weatherObj) {
+//             $('.location').text(location.val());
+//             $('.temp').text(weatherObj.main.temp);
+//             $('.humidity').text(weatherObj.main.humidity);
+//             $('.wind').text(weatherObj.wind.speed);
+//         });
+//     });
+// });
 
 
-
-
-
-
-
-
+// similar to window.onload
+// $(document).ready(function () {
+//     var apiKey = 'a28541e48c380025ec86ee643036ba02';
+//     //grab to ul
+// 	  var list = $('#list')
+//     //grab the input field
+//     var input = $('#new-item')
+//     //add 'archive' to existing li's
+//     prepend($('li'))
+//     //add click event to button
+//     $('#clickme').click(function(event){
+//       //prevents default behaviour of form
+//       event.preventDefault()
+//       //confirm there is something in the input when submitted
+//       if(input.val() == "") {alert("type something")}
+//       else {
+//         //create a new li with the input value
+//         var item = $('<li>').html(input.val())
+//         //prepend 'archive' to the new li
+//         prepend(item)
+//         //append the li to the ul
+//         list.append(item)
+//         //reset the focus of the input..this puts a blue border around input
+//         input.val("").focus()
+//       }//else
+//     })//click event
+// })//ready event
+//
+//
+// //add event listener on ul so it's aware of newly added children
+// $("ul").on('click',".archive",function(){
+//   $(this).parent().remove() //$(this) will be the span and .parent() the li
+// })
+// //prepend function will add 'archive' to li
+// function prepend(lis){
+//   var archive = $("<span>").html("archive - ").addClass("archive")
+//   $(lis).prepend(archive)
+// }
 
 
 // $(document).ready(function () {
@@ -75,3 +105,166 @@ $(document).ready(function() {
 //
 //   });
 // });
+
+$(document).ready(function () {
+  var apiKey = '19ab861f15cfd2e8216a3be1ed615598';
+  var weatherUrl = 'http://api.openweathermap.org/data/2.5/weather?appid=' + apiKey + '&units=imperial&q=';
+
+  // Problem 1
+  $.get(weatherUrl + 'New York City')
+    .fail(function (xhr) {
+      console.log(xhr);
+    })
+  	.done(function (response) {
+  		console.log(response);
+
+  		var temp = response.main.temp;
+  		var humidity = response.main.humidity;
+  		var windSpeed = response.wind.speed;
+
+		$('#nyc-weather')
+			.append('<p>Temperature: ' + temp + '</p>')
+			.append('<p>Humidity: ' + humidity + '</p>')
+			.append('<p>Wind Speed: ' + windSpeed + '</p>')
+
+  	})
+  	// .fail(function (xhr) {
+  	// 	console.log(xhr);
+  	// });
+
+  	// Problem 2
+  	$('#weather-form').submit(function (event) {
+  		event.preventDefault();
+
+  		// get user input
+  		var city = $('#city').val();
+  		var state = $('#state').val();
+
+  		$.ajax({
+  			url: weatherUrl + city + ',' + state,
+  			type: 'GET',
+  			success: function (response) {
+  				// pipe AJAX reponse to outside function for cleaner code
+  				outputWeather(response);
+  			},
+  			error: function (xhr) {
+  				console.log(xhr);
+  			}
+  		});
+  	})
+
+  	function outputWeather (response) {
+  		console.log(response);
+
+  		var city = response.name;
+  		var temp = response.main.temp;
+  		var humidity = response.main.humidity;
+  		var windSpeed = response.wind.speed;
+
+  		// change background color
+  		colorBackground(temp);
+
+  		$('#weather-output')
+  			.empty() // be sure to clear out any data from previous searches!
+  			.append('<p>City: ' + city + '</p>')
+  			.append('<p>Temperature: ' + temp + '</p>')
+  			.append('<p>Humidity: ' + humidity + '</p>')
+  			.append('<p>Wind Speed: ' + windSpeed + '</p>')
+
+      // Intermediate Bonus: handlebars.js
+      // var template = Handlebars.compile($('#weather-template').html());
+
+      // // create an object to pass into the template; use the variables above
+      // var weatherObj = {
+      //   city: city,
+      //   temp: temp,
+      //   humidity: humidity,
+      //   windSpeed: windSpeed,
+      // }
+
+      // $('#weather-output').append(template(weatherObj));
+  	}
+
+
+  	// Bonus - change background color based on temperature
+  	function colorBackground (temp) {
+  		if (temp > 70) {
+  			$('body').css('background', 'red');
+  		} else {
+  			$('body').css('background', 'blue');
+  		}
+  	}
+
+  $('#clickme').click(function(event){
+    event.preventDefault();
+      var apiKey = '963e108b3e21fb75d02fc3f49a345f13';
+      var newCity = $('#city').val();
+      var newState = $('#state').val();
+      var newWeatherUrl = 'http://api.openweathermap.org/data/2.5/weather?q='+newCity+','+newState+'&units=imperial&appid=' + apiKey;
+
+
+    function addToDOM(data){
+        $('#weather-summary2').append('<p>' + 'Here are some of the weather details in '+ newCity + ', ' + newState + ':'+ '</p>');
+        $('#weather-summary2').append('<li>' + 'Temp : '  + data.main.temp + ' ˚F' + '</li>');
+        $('#weather-summary2').append('<li>' + 'Humidity: '  + data.main.humidity + '</li>');
+        $('#weather-summary2').append('<li>' + 'Wind speed (mph): '  + data.wind.speed + '</li>');
+    }
+
+    // function changeColor(data){
+    //     var temp = parseInt(data.main.temp);
+    //     // console.log(temp);
+    //     if (temp < 65){
+    //       $('body').css('background-color', 'blue');
+    //     } else {
+    //       $('body').css('background-color', 'red');
+    //     }
+    //     // } else if (temp <= 85){
+    //     //   $('body').css('background-color', 'purple');
+    //     // } else {
+    //     //   $('body').css('background-color', 'red');
+    //     // }
+    // }
+
+
+    function setPicture (data){
+      // console.log('hi');
+      var apiKey = '5888f4afcee00eca4cd92576788b1498';
+      var newCity = $('#city').val();
+      var picUrl = 'https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key='+apiKey+'&tags='+newCity+'&format=json&nojsoncallback=1';
+        $.ajax({
+            url: picUrl,
+            type: 'GET',
+            success: function (data) {
+              //https://farm{farm-id}.staticflickr.com/{server-id}/{id}_{secret}.jpg
+              var farmId = data.photos.photo[0].farm;
+              var serverID = data.photos.photo[0].server;
+              var id = data.photos.photo[0].id;
+              var secret = data.photos.photo[0].secret;
+              var imgUrl = 'https:'+'//'+'farm'+farmId+'.staticflickr.com'+'/'+serverID+'/'+id+'_'+secret+'.jpg';
+              console.log(imgUrl);
+              $('body').css({'background-image':'url('+ imgUrl + ')'})
+              $('body').css("color","white")
+            },
+            error: function  (response) {
+              console.log (response);
+
+            }
+      });
+    }
+
+  $.ajax({
+      url: newWeatherUrl,
+      type: 'GET',
+      success: function (data) {
+        setPicture(data);
+        // changeColor(data);
+        $('#city').val('');
+        $('#state').val('');
+        $('input:text:first').focus();
+      }
+
+  });
+
+});
+
+});

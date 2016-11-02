@@ -9,18 +9,15 @@ $.get("https://accesscontrolalloworiginall.herokuapp.com/http://mashable.com/sto
     articles.forEach(function(article) {
         var singleArticleObj = {
             title: article.title,
-            // link: article.link,
+            link: article.link,
             feature_image_src: article.feature_image,
             channel: article.channel,
             total_shares: article.shares.total
         };
         //add singleArticleObj to articlesCollection
         articlesCollection.push(singleArticleObj);
-
-
     });
     console.log(articlesCollection);
-
     //1. grab handblebars template
     var articleTemplate = $("#article-template").html();
     //2. complie template
@@ -31,8 +28,6 @@ $.get("https://accesscontrolalloworiginall.herokuapp.com/http://mashable.com/sto
     });
     //4. append
     var hbList = $('#all_articles').append(articlesHtmlBlock);
-
-
 });
 
 // $('#popUp .popUpAction').show();

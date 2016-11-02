@@ -9,27 +9,54 @@
 	<h1>Open Weather Maps API</h1>
 	<hr>
 
-<div>
+<!-- <div>
   <form id="my-form">
       <input type="city" id="my-input" placeholder="Enter city and state" />
-      <button>Get weather info</button>
+      <button>Get weather info</button> -->
 
+      <div>
+    		<h2>Current Weather in NYC</h2>
+    		<div id="nyc-weather"></div>
+    	</div>
 
-  </form>
-    <h2>Current Weather in <span class = "location"></span></h2>
+  <hr>
+  <!-- </form>
+    <h2>Current Weather in <span class = "location"></span></h2> -->
+  <div>
+    <form id="weather-form">
+			<h2>Find Weather</h2>
+			<label for="city">City</label>
+			<input name="city" type="text" id="city" placeholder="City">
+			<label for="state">State</label>
+			<input name="state" type="text" id="state" placeholder="State">
+			<button>Go!</button>
+		</form>
 
-    <div id="nyc-weather">
+    <div id="weather-output"></div>
+		<button id="clickme">Flickr</button>
+	</div>
+
+    <!-- <div id="nyc-weather">
         <p>The temp in <span class="location"></span> is <span class="temp"></span> degrees</p>
         <p>The humidity in <span class="location"></span> is <span class="humidity"></span> precent</p>
-        <p>The wind speed in <span class="location"></span> is <span class="wind"></span> mph</p>
+        <p>The wind speed in <span class="location"></span> is <span class="wind"></span> mph</p> -->
 
 
     </div>
-	</div>
-	<hr>
 
-	  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-  	<script src="main.js" type="text/javascript" charset="utf-8" async defer></script>
+    <script id="weather-template" type="text/x-handlebars-template">
+		<p>City: {{city}}</p>
+		<p>Temperature: {{temp}}</p>
+		<p>Humidity: {{humidity}}</p>
+		<p>Wind Speed: {{windSpeed}}</p>
+	  </script>
+
+	  <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+  	<script src="main.js" type="text/javascript" charset="utf-8" async defer></script> -->
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="handlebars.js"></script>
+    <script src="main.js" type="text/javascript" charset="utf-8" async defer></script>
 
 </body>
 </html>
