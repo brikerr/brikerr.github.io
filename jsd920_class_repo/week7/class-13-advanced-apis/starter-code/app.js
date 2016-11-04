@@ -33,36 +33,34 @@ $(function() {
                     sort: 'highest_rating'
                 };
 
+
+
                 _500px.api('/photos/search', searchOptions, function(response) {
                     console.log(response);
                     if (response.data.photos.length == 0) {
                         alert('no photos found');
                     } else {
-
-
-                        // $(".images").each(function() {
-                        //     $(this).append(response.data.photos[0]).attr('src');
-                        // });
-                        //
-                        // $(".images").each(function() {
-                        //     $(this).append('.images').attr('src', response.data.photos[0]);
-                        // });
-
-                        // $(response.data.photos).each(function() {
-                        //     $(this).append('.images').attr('src', response.data.photos[0]);
-                        // });
-
-                        $("images").each(function() {
-                            $(this).append('.images' + response.data.photos.image_url + '.images').attr('src');
-                        });
-
-                        //custom function
+                        handleResponseSuccess(response);
                     }
                 });
-
             });
+
         } else {
             $('.images').append('Sorry, the browser does not support geolocation');
         }
+
+
     });
+
+    function handleResponseSuccess(response) {
+        //repsonse is an array of objects
+        var allPics = response.data.photos
+            //loop through the allpics array using jquery ($.each)
+        $.each(allPics, function(i, d) {
+            //create the dom element using jquery
+            var element = $('<img>').attr('src', d.image_url).addClass('image')
+                //grab the dom element ans append the image
+            $('.images').append(element)
+        })
+    }
 });

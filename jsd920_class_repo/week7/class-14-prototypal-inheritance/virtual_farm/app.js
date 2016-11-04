@@ -38,8 +38,18 @@ Instructions:
 
 
 $(document).ready(function () {
+	function FarmAnimal(name, sound, image, talk){
+		this.name = name;
+		this.sound = sound;
+		this.image = image;
+		this.talk = talk;
+	}
 
 	// push all animal instances here
 	var farmAnimals = [];
+
+	var bee = new FarmAnimal('brad', 'buzzzzz', 'hello');
+	var bear = new FarmAnimal('stacey', 'roarrrr', 'hello');
+	var bird = new FarmAnimal('hawk', 'whistle', 'hello');
 
 })

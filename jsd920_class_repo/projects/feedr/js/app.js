@@ -23,12 +23,9 @@ $.get("https://accesscontrolalloworiginall.herokuapp.com/http://mashable.com/sto
     //2. complie template
     var compileTemp = Handlebars.compile(articleTemplate);
     //3. add objs
-    var articlesHtmlBlock = compileTemp({
-        articles: articlesCollection
-    });
+    var articlesHtmlBlock = compileTemp({articles: articlesCollection});
     //4. append
-    var hbList = $('#all_articles').append(articlesHtmlBlock);
-});
+    var hbList = $('#all_articles').append(articlesHtmlBlock);});
 
 // $('#popUp .popUpAction').show();
 //
