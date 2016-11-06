@@ -42,14 +42,24 @@ $(document).ready(function () {
 		this.name = name;
 		this.sound = sound;
 		this.image = image;
-		this.talk = talk;
+		this.talk = function() {
+			return alert("Hello, I'm " + this.name + " and this is the sound I make " + this.sound);
+		};
 	}
 
-	// push all animal instances here
-	var farmAnimals = [];
+var bee = new FarmAnimal('brad', 'buzzzzz', 'hello', 'http://weknowyourdreams.com/images/bee/bee-01.jpg');
+var bear = new FarmAnimal('stacey', 'roarrrr', 'hello', 'https://upload.wikimedia.org/wikipedia/commons/8/88/Kamchatka_Brown_Bear_near_Dvuhyurtochnoe_on_2015-07-23.png');
+var bird = new FarmAnimal('hawk', 'whistle', 'hello', 'https://files.allaboutbirds.net/wp-content/themes/html5blank-stable/images/blue-winged-warbler.jpg');
 
-	var bee = new FarmAnimal('brad', 'buzzzzz', 'hello');
-	var bear = new FarmAnimal('stacey', 'roarrrr', 'hello');
-	var bird = new FarmAnimal('hawk', 'whistle', 'hello');
+// push all animal instances here
+var farmAnimals = [];
+farmAnimals.push('bee');
+farmAnimals.push('bear');
+farmAnimals.push('bird');
 
-})
+
+$('body').append('.animal' + farmAnimals['bee.image']);
+$('body').append('.animal' + farmAnimals['bear.image']);
+$('body').append('.animal' + farmAnimals['bird.image']);
+
+});
