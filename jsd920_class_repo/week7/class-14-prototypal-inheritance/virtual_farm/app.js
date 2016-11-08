@@ -66,8 +66,8 @@ function Bird (name, sound, image){
 // push all animal instances here
 var farmAnimals = [];
 
-var brad = new Bee ('brad', 'buzzzzz', "background: url('http://weknowyourdreams.com/images/bee/bee-01.jpg')");
-var stacey = new Bear ('stacey', 'roarrrr', "background: url('https://upload.wikimedia.org/wikipedia/commons/8/88/Kamchatka_Brown_Bear_near_Dvuhyurtochnoe_on_2015-07-23.png')");
+var brad = new Bee ('brad', 'buzzzzz', 'background-image: url("http://weknowyourdreams.com/images/bee/bee-01.jpg")');
+var stacey = new Bear ('stacey', 'roarrrr', 'background-image: url("https://upload.wikimedia.org/wikipedia/commons/8/88/Kamchatka_Brown_Bear_near_Dvuhyurtochnoe_on_2015-07-23.png")');
 var hawk = new Bird ('hawk', 'whistle', 'background-image: url("https://files.allaboutbirds.net/wp-content/themes/html5blank-stable/images/blue-winged-warbler.jpg")');
 
 farmAnimals.push(brad);
