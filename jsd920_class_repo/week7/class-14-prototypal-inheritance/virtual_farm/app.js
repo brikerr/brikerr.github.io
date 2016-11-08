@@ -42,24 +42,52 @@ $(document).ready(function () {
 		this.name = name;
 		this.sound = sound;
 		this.image = image;
-		this.talk = function() {
+		this.talk = function(name, sound) {
 			return alert("Hello, I'm " + this.name + " and this is the sound I make " + this.sound);
 		};
 	}
 
-var bee = new FarmAnimal('brad', 'buzzzzz', 'hello', 'http://weknowyourdreams.com/images/bee/bee-01.jpg');
-var bear = new FarmAnimal('stacey', 'roarrrr', 'hello', 'https://upload.wikimedia.org/wikipedia/commons/8/88/Kamchatka_Brown_Bear_near_Dvuhyurtochnoe_on_2015-07-23.png');
-var bird = new FarmAnimal('hawk', 'whistle', 'hello', 'https://files.allaboutbirds.net/wp-content/themes/html5blank-stable/images/blue-winged-warbler.jpg');
+// var bee = new FarmAnimal('brad', 'buzzzzz', "background-image: url('http://weknowyourdreams.com/images/bee/bee-01.jpg')");
+// var bear = new FarmAnimal('stacey', 'roarrrr', "background-image: url('https://upload.wikimedia.org/wikipedia/commons/8/88/Kamchatka_Brown_Bear_near_Dvuhyurtochnoe_on_2015-07-23.png')");
+// var bird = new FarmAnimal('hawk', 'whistle', "background: url('https://files.allaboutbirds.net/wp-content/themes/html5blank-stable/images/blue-winged-warbler.jpg')");
+
+function Bee (name, sound, image){
+	FarmAnimal.call(this, name, sound, image);
+}
+
+function Bear (name, sound, image){
+	FarmAnimal.call(this, name, sound, image);
+}
+
+function Bird (name, sound, image){
+	FarmAnimal.call(this, name, sound, image);
+}
 
 // push all animal instances here
 var farmAnimals = [];
-farmAnimals.push('bee');
-farmAnimals.push('bear');
-farmAnimals.push('bird');
+
+var brad = new Bee ('brad', 'buzzzzz', "background: url('http://weknowyourdreams.com/images/bee/bee-01.jpg')");
+var stacey = new Bear ('stacey', 'roarrrr', "background: url('https://upload.wikimedia.org/wikipedia/commons/8/88/Kamchatka_Brown_Bear_near_Dvuhyurtochnoe_on_2015-07-23.png')");
+var hawk = new Bird ('hawk', 'whistle', 'background-image: url("https://files.allaboutbirds.net/wp-content/themes/html5blank-stable/images/blue-winged-warbler.jpg")');
+
+farmAnimals.push(brad);
+farmAnimals.push(stacey);
+farmAnimals.push(hawk);
+
+$('body').append('<div .animal>' + brad.image + '</div>');
+$('body').append('<div .animal>' + stacey.image + '</div>');
+$('body').append('<div .animal>' + hawk.image + '</div>');
 
 
-$('body').append('.animal' + farmAnimals['bee.image']);
-$('body').append('.animal' + farmAnimals['bear.image']);
-$('body').append('.animal' + farmAnimals['bird.image']);
+
+// .on( "click", function() {
+//   $( this ).css( "background-color", "yellow" );
+// });;
+
+// click(function(){
+// 	alert(FarmAnimal.bee.talk);
+
+// $('body').append('.animal' + farmAnimals['bear.image']);
+// $('body').append('.animal' + farmAnimals['bird.image']);
 
 });
