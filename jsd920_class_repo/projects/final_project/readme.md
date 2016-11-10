@@ -4,10 +4,9 @@
 
 Sounds & Beats is a web app that allows users to create and manipulate sounds in a few different ways.
 
-## Functionl Components
+## Functional Components
 
 Breakdown of the top level functionality for final project:
-
 * Direct triggering and manipulation of different types of sounds via the computer keyboard.
 * Manipulation of synthesized sounds through various effects channels.
 * Creation of JavaScript based synthesizers.
@@ -17,10 +16,14 @@ Breakdown of the top level functionality for final project:
 
 
 ## Helper Functions
-Use this section to document all helper functions. These functions should be versatile enough to be reused in other projects
+* Will be added soon..
+
 
 ## Supporting Libraries
- Use this section to list all supporting libraries and their role in the project
+* jQuery: appending UI elements to the DOM
+* Draggabilly JS: enabling dragging of certain elements within the UI
+* Qwerty Hancock keyboard library v0.5.1: enabling the certain keys on the keyboard to trigger sound events
+* Tone JS: is a web audio framework used for all sound related synthesis and events
 
 ## JSON Data Keys
  Use this section to list specific JSON Data Key mappings.  
