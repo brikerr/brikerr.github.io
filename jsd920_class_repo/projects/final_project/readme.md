@@ -2,7 +2,7 @@
 
 ## Project Description
 
-Sounds & Beats is a single-page web app that allows users to create and manipulate synthesized sounds in a few different ways. Sounds can be produced by typing on their computer keyboard as well as tapping the UI buttons to start loops. The keyboard sounds can be alter with various effects by using the slider components.
+Sounds & Beats is a single-page web app that allows users to create and manipulate synthesized sounds in a few different ways. Sounds can be produced by typing on their computer keyboard as well as tapping the UI buttons to start loops. The sounds triggered by the computer keyboard can be alter with various effects by using the slider components.
 
 ## Functional Components
 
