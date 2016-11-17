@@ -96,202 +96,207 @@ $(function() {
     };
 
 
-  // High-hats
+// High-hats
 
-  // filtering the hi-hats a bit to make them sound nicer
-  var lowPass = new Tone.Filter({
-      "frequency": 14000,
-  }).toMaster();
+// filtering the hi-hats a bit to make them sound nicer
+var lowPass = new Tone.Filter({
+  "frequency": 14000,
+}).toMaster();
 
-  // open High-hat sound synth
-  // the noise synth and a sharp filter envelope
-  var openHiHat = new Tone.NoiseSynth({
-      "volume": -10,
-      "filter": {
-          "Q": 1
-      },
-      "envelope": {
-          "attack": 0.01,
-          "decay": 0.3
-      },
-      "filterEnvelope": {
-          "attack": 0.01,
-          "decay": 0.03,
-          "baseFrequency": 4000,
-          "octaves": -2.5,
-          "exponent": 4,
-      }
-  }).connect(lowPass);
+// open High-hat sound synth
+// the noise synth and a sharp filter envelope
+var openHiHat = new Tone.NoiseSynth({
+  "volume": -10,
+  "filter": {
+      "Q": 1
+  },
+  "envelope": {
+      "attack": 0.01,
+      "decay": 0.3
+  },
+  "filterEnvelope": {
+      "attack": 0.01,
+      "decay": 0.03,
+      "baseFrequency": 4000,
+      "octaves": -2.5,
+      "exponent": 4,
+  }
+}).connect(lowPass);
 
-  // open High-hat part
-  var openHiHatPart = new Tone.Part(function(time) {
-      openHiHat.triggerAttack(time);
-  }, ["2*8n", "6*8n"]).start(0);
+// open High-hat part
+var openHiHatPart = new Tone.Part(function(time) {
+  openHiHat.triggerAttack(time);
+}, ["2*8n", "6*8n"]).start(0);
 
-  // closed High-hat synth
-  var closedHiHat = new Tone.NoiseSynth({
-      "volume": -10,
-      "filter": {
-          "Q": 1
-      },
-      "envelope": {
-          "attack": 0.01,
-          "decay": 0.15
-      },
-      "filterEnvelope": {
-          "attack": 0.01,
-          "decay": 0.03,
-          "baseFrequency": 4000,
-          "octaves": -2.5,
-          "exponent": 4,
+// closed High-hat synth
+var closedHiHat = new Tone.NoiseSynth({
+  "volume": -10,
+  "filter": {
+      "Q": 1
+  },
+  "envelope": {
+      "attack": 0.01,
+      "decay": 0.15
+  },
+  "filterEnvelope": {
+      "attack": 0.01,
+      "decay": 0.03,
+      "baseFrequency": 4000,
+      "octaves": -2.5,
+      "exponent": 4,
 
-      }
-  }).connect(lowPass);
+  }
+}).connect(lowPass);
 
-  // closed High-hat part
-  var closedHatPart = new Tone.Part(function(time) {
-      closedHiHat.triggerAttack(time);
-  }, ["1*8n", "1*16n", "1*8n", "3*16n", "4*16n", "5*8n", "7*8n", "0*8n"]).start(0);
+// closed High-hat part
+var closedHatPart = new Tone.Part(function(time) {
+  closedHiHat.triggerAttack(time);
+}, ["1*16n", "1*16n", "1*8n", "3*16n", "4*16n", "5*8n", "7*8n", "0*8n"]).start(0);
 
-    // Bass envelope
-    var bassEnvelope = new Tone.AmplitudeEnvelope({
-        "attack": 0.01,
-        "decay": 0.2,
-        "sustain": 0,
-        "release": 0,
-    }).toMaster();
+// Bass envelope
+var bassEnvelope = new Tone.AmplitudeEnvelope({
+    "attack": 0.01,
+    "decay": 0.2,
+    "sustain": 0,
+    "release": 0,
+}).toMaster();
 
-    // Bass filter
-    var bassFilter = new Tone.Filter({
-        "frequency": 600,
-        "Q": 8
+// Bass filter
+var bassFilter = new Tone.Filter({
+    "frequency": 600,
+    "Q": 8
+});
+
+// Bass synth
+var bass = new Tone.PulseOscillator("A2", 0.4).chain(bassFilter, bassEnvelope);
+bass.start();
+
+// Bass part
+var bassPart = new Tone.Part(function(time, note) {
+    bass.frequency.setValueAtTime(note, time);
+    bassEnvelope.triggerAttack(time);
+}, [
+    ["0:1:2", "A1"],
+    ["0:2", "G1"],
+    ["0:2:2", "C2"],
+    ["0:5:2", "A1"]
+]).start(0);
+
+// tock envelope
+var tockEnvelope = new Tone.AmplitudeEnvelope({
+    "attack": 0.002,
+    "decay": 0.4,
+    "sustain": 0,
+    "release": 0,
+}).toMaster();
+
+// tock synth
+var tock = new Tone.Oscillator("A4").connect(tockEnvelope);
+tock.start();
+
+// tock loop
+var tockLoop = new Tone.Loop(function(time) {
+    tockEnvelope.triggerAttack(time);
+}, "2n").start(0);
+
+// kick drum envelope
+var kickEnvelope = new Tone.AmplitudeEnvelope({
+    "attack": 0.02,
+    "decay": 0.2,
+    "sustain": 0,
+    "release": 0
+}).toMaster();
+
+// kick drum Oscillator
+var kick = new Tone.Oscillator("A2").connect(kickEnvelope).start();
+
+// kick drum envelope
+kickSnapEnv = new Tone.FrequencyEnvelope({
+    "attack": 0.005,
+    "decay": 0.01,
+    "sustain": 0,
+    "release": 0,
+    "baseFrequency": "A2",
+    "octaves": 2.7
+}).connect(kick.frequency);
+
+// kick drum part
+var kickPart = new Tone.Part(function(time) {
+    kickEnvelope.triggerAttack(time);
+    kickSnapEnv.triggerAttack(time);
+}, ["0", "0:0:3", "0:2:0", "0:3:1"]).start(0);
+
+// sound transport hook-up
+Tone.Transport.loopStart = 0;
+Tone.Transport.loopEnd = "1:0";
+Tone.Transport.loop = true;
+
+// button to triger beat loop
+$(function() {
+    new Interface.Button({
+        key: 32,
+        type: "toggle",
+        text: "Try A Beat",
+        activeText: "Stop",
+        start: function() {
+            Tone.Transport.start("+0.1");
+        },
+        end: function() {
+            Tone.Transport.stop();
+        }
     });
+});
 
-    // Bass synth
-    var bass = new Tone.PulseOscillator("A2", 0.4).chain(bassFilter, bassEnvelope);
-    bass.start();
+// piano synth
+var chordPlay = new Tone.PolySynth(4, Tone.Synth, {
+    "volume": 2,
+    "oscillator": {
+        "partials": [1, 8, 10],
+    },
+    "portamento": 0.05
+}).toMaster()
 
-    // Bass part
-    var bassPart = new Tone.Part(function(time, note) {
-        bass.frequency.setValueAtTime(note, time);
-        bassEnvelope.triggerAttack(time);
-    }, [
-        ["0:1:2", "A1"],
-        ["0:2", "G1"],
-        ["0:2:2", "C2"],
-        ["0:5:2", "A1"]
-    ]).start(0);
+// chords that are trigger within the piano part
+var cChord = ["A3", "A3", "A3", "G2"];
+var dChord = ["A2", "A2", "G4", "G1"];
+var gChord = ["C3", "A3", "A3", "A3"];
 
-    // tock envelope
-    var tockEnvelope = new Tone.AmplitudeEnvelope({
-        "attack": 0.002,
-        "decay": 0.4,
-        "sustain": 0,
-        "release": 0,
-    }).toMaster();
+// the arrangment of when the chords are triggered
+var chordPlayPart = new Tone.Part(function(time, chord) {
+    chordPlay.triggerAttackRelease(chord, "8n", time);
+}, [
+    ["0:0:2", cChord],
+    ["0:1", cChord],
+    ["0:1:3", dChord],
+    ["0:2:2", cChord],
+    ["0:3", cChord],
+    ["0:3:2", gChord]
+]).start("2m");
 
-    // tock synth
-    var tock = new Tone.Oscillator("A4").connect(tockEnvelope);
-    tock.start();
+// looping the chord parts
+chordPlayPart.loop = true;
+chordPlayPart.loopEnd = "1m";
+chordPlayPart.humanize = true;
 
-    // tock loop
-    var tockLoop = new Tone.Loop(function(time) {
-        tockEnvelope.triggerAttack(time);
-    }, "2n").start(0);
+// Tone.Transport.loopStart = 0;
+// Tone.Transport.loopEnd = "1m";
+// Tone.Transport.loop = true;
 
-    // kick drum envelope
-    var kickEnvelope = new Tone.AmplitudeEnvelope({
-        "attack": 0.02,
-        "decay": 0.2,
-        "sustain": 0,
-        "release": 0
-    }).toMaster();
 
-    // kick drum Oscillator
-    var kick = new Tone.Oscillator("A2").connect(kickEnvelope).start();
-
-    // kick drum envelope
-    kickSnapEnv = new Tone.FrequencyEnvelope({
-        "attack": 0.005,
-        "decay": 0.01,
-        "sustain": 0,
-        "release": 0,
-        "baseFrequency": "A2",
-        "octaves": 2.7
-    }).connect(kick.frequency);
-
-    // kick drum part
-    var kickPart = new Tone.Part(function(time) {
-        kickEnvelope.triggerAttack(time);
-        kickSnapEnv.triggerAttack(time);
-    }, ["0", "0:0:3", "0:2:0", "0:3:1"]).start(0);
-
-    // sound transport hook-up
-    Tone.Transport.loopStart = 0;
-    Tone.Transport.loopEnd = "1:0";
-    Tone.Transport.loop = true;
-
-    // button to triger beat loop
-    $(function() {
-        new Interface.Button({
-            key: 32,
-            type: "toggle",
-            text: "Try A Beat",
-            activeText: "Stop",
-            start: function() {
-                Tone.Transport.start("+0.1");
-            },
-            end: function() {
-                Tone.Transport.stop();
-            }
-        });
+// button to trigger the chord sequence
+$(function() {
+    new Interface.Button({
+        key: 32,
+        type: "toggle",
+        text: "Try A Melody",
+        activeText: "Stop",
+        start: function() {
+            chordPlayPart.start(0);
+        },
+        end: function() {
+            chordPlayPart.stop(0);
+        }
     });
-
-  // piano synth
-  var chordPlay = new Tone.PolySynth(4, Tone.Synth, {
-      "volume": -8,
-      "oscillator": {
-          "partials": [1, 2, 1],
-      },
-      "portamento": 0.05
-  }).toMaster()
-
-  // chords that are trigger within the piano part
-  var cChord = ["A3", "A3", "A3", "G2"];
-  var dChord = ["A2", "A2", "G4", "G1"];
-  var gChord = ["C3", "A3", "A3", "A3"];
-
-  // the arrangment of when the chords are triggered
-  var chordPlayPart = new Tone.Part(function(time, chord) {
-      chordPlay.triggerAttackRelease(chord, "8n", time);
-  }, [
-      ["0:0:2", cChord],
-      ["0:1", cChord],
-      ["0:1:3", dChord],
-      ["0:2:2", cChord],
-      ["0:3", cChord],
-      ["0:3:2", gChord]
-  ]).start("2m");
-
-  // looping the chord parts
-  chordPlayPart.loop = true;
-  chordPlayPart.loopEnd = "1m";
-  chordPlayPart.humanize = true;
-
-  // button to trigger the chord sequence
-  $(function() {
-      new Interface.Button({
-          key: 32,
-          type: "toggle",
-          text: "Try A Melody",
-          activeText: "Stop",
-          start: function() {
-              chordPlayPart.start(0);
-          },
-          end: function() {
-              chordPlayPart.stop(0);
-          }
-      });
-  });
+});
 
 });

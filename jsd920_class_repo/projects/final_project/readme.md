@@ -112,6 +112,8 @@ Button setup
   	}
   ```
 
+
+
 ## Supporting Libraries
 * jQuery: appending UI elements to the DOM
 * Draggabilly JS: enabling dragging of certain elements within the UI
@@ -127,7 +129,7 @@ Button setup
 ## Change Log
 * 9/27 - Investigating web audio APIs
 * 10/30 - Moving away from stored sound files and will rely on synthesized sounds.
-* 11/3 - Change the monophonic synthesizer to polyphonic
+* 11/3 - Changed the monophonic synthesizer to polyphonic
 
 ## Issues and Resolutions
  Use this section to list of all issues encountered and their resolution
