@@ -57,6 +57,38 @@ Keyboard UI constructor and key mapping
         keyDownCallback,
         keyUpCallback;
 ```
+```
+Creating sounds with certain keys are pressed
+
+/**
+ * Get frequency of a given note.
+ * @param  {string} note Musical note to convert into hertz.
+ * @return {number} Frequency of note in hertz.
+ */
+var getFrequencyOfNote = function (note) {
+    var notes = ['A', 'A#', 'B', 'C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#'],
+        key_number,
+        octave;
+
+    if (note.length === 3) {
+        octave = note.charAt(2);
+    } else {
+        octave = note.charAt(1);
+    }
+
+    key_number = notes.indexOf(note.slice(0, -1));
+
+    if (key_number < 3) {
+        key_number = key_number + 12 + ((octave - 1) * 12) + 1;
+    } else {
+        key_number = key_number + ((octave - 1) * 12) + 1;
+    }
+
+    return 440 * Math.pow(2, (key_number - 49) / 12);
+};
+```
+
+
 
 Slider knob setup with Tone.js
 
@@ -112,28 +144,25 @@ Button setup
   	}
   ```
 
-
-
 ## Supporting Libraries
-* jQuery: appending UI elements to the DOM
-* Draggabilly JS: enabling dragging of certain elements within the UI
-* Qwerty Hancock keyboard library v0.5.1: enabling the certain keys on the keyboard to trigger sound events
-* Tone JS: is a web audio framework used for all sound related synthesis and events
+* jQuery: appending UI elements to the DOM (link)
+* Draggabilly JS: enabling dragging of certain elements within the UI (link)
+* Qwerty Hancock keyboard library v0.5.1: enabling the certain keys on the keyboard to trigger sound events (link)
+* Tone JS: is a web audio framework used for all sound related synthesis and events (link)
 
-## JSON Data Keys
- Use this section to list specific JSON Data Key mappings.  
 
 ## jQuery Functional Requirements
  Use this section to list some, but not all, of the jQuery methods discovered while working on this project.
+ * .attr
+ * .addEventListener
+
 
 ## Change Log
 * 9/27 - Investigating web audio APIs
 * 10/30 - Moving away from stored sound files and will rely on synthesized sounds.
 * 11/3 - Changed the monophonic synthesizer to polyphonic
+* 11/13 - Completed all baseline functionality but still have a conflict with multiple pattern triggering.
+
 
 ## Issues and Resolutions
- Use this section to list of all issues encountered and their resolution
-
-#### SAMPLE.....
-**ERROR**: app.js:34 Uncaught SyntaxError: Unexpected identifier                                
-**RESOLUTION**: Missing comma after first object in sources {} object
+ * 11/17 - Having trouble with Independent pattern triggering. No errors but functionality is not working yet. I currently believe it is an issue with Tone Transport.
